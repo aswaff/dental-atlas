@@ -249,7 +249,7 @@ td.m{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
   <header>
     <div class="brand">
       <h1>Dental Terminology Atlas</h1>
-      <p>Chapters 3–4 · Session 2 · Weeks 3–4 · anatomy, the clinic, infection control, patient care and radiography · click anything to learn its name</p>
+      <p>Weeks 1–4 · anatomy, the clinic, infection control, patient care and radiography · click anything to learn its name</p>
     </div>
     <div class="tabs" role="tablist" aria-label="Section">
       <button role="tab" id="tab-lesson" data-mode="lesson" aria-selected="true">Lesson</button>
@@ -920,7 +920,7 @@ ${[['Central incisor','dcentral'],['Lateral incisor','dlateral'],['First molar',
   controls:['dent3','system'],
   body:`<p>You have covered the whole chapter. You should now be able to:</p>
 <ul><li>Name the anatomic parts of a tooth and describe each tissue.</li><li>Tell the four types of teeth apart, and describe the arches, quadrants, sextants, and anterior and posterior teeth.</li><li>Name and locate all five tooth surfaces, and explain contours, contacts, embrasures and occlusion.</li><li>Describe the primary, mixed and permanent dentitions.</li><li>Identify any tooth with the Universal, ISO/FDI or Palmer system.</li></ul>
-<div class="actions"><button class="btn primary" data-act="ch4quiz">Take the 20-question review</button><button class="btn" data-act="glossary">Review key terms</button></div>`,
+<div class="actions"><button class="btn primary" data-act="chw1quiz">Take the full Week 1 review (40)</button><button class="btn" data-act="ch4quiz">Dental anatomy only (20)</button><button class="btn" data-act="glossary">Review key terms</button></div>`,
   check:null}
 ];
 
@@ -1983,7 +1983,7 @@ const LESSON3=[
 <tr><td class="k">Mucosa</td><td>Masticatory: gingiva, hard palate, tongue dorsum. Lining: everything else</td></tr>
 <tr><td class="k">Radiograph lines</td><td>Upper: ala–tragus. Lower: corner of mouth–tragus</td></tr>
 </tbody></table></div>
-<div class="actions"><button class="btn primary" data-act="ch3quiz">Take the 20-question review</button><button class="btn" data-act="glossary">Review key terms</button></div>`,
+<div class="actions"><button class="btn primary" data-act="ch3quiz">Take the head and neck review (20)</button><button class="btn" data-act="glossary">Review key terms</button></div>`,
   remember:null,check:null}
 ];
 
@@ -2948,7 +2948,7 @@ const LESSON_S2=[
    remember:['Share only the minimum necessary about a patient, only with those who need it.','Don’t discuss patients at the front desk, in hallways or on social media.','Lock the screen and turn charts face down.','The patient chart is a legal document.'],
    check:{q:'Which of these follows HIPAA?',a:'Locking the computer screen when you leave the operatory',d:['Discussing a patient’s treatment in the waiting room','Posting a before-and-after photo without permission','Leaving the day sheet on the front counter'],why:'Protecting records from people who don’t need them is the core of the privacy rule.'}},
   /* ---- Wrap-up ---- */
-  {id:'comp',sec:'Wrap-up',title:'Your Session 2 competency checklist',scene:OPS({pins:[],cam:'room',zones:false}),controls:['opview','chair','zones','patient'],comp:true,
+  {id:'comp',sec:'Wrap-up',title:'Your Week 2 competency checklist',scene:OPS({pins:[],cam:'room',zones:false}),controls:['opview','chair','zones','patient'],comp:true,
    body:`<p>This is your school’s Session 2 competency. In your externship office, a lead assistant or the dentist watches you identify each item and grades it S (satisfactory) or U (unsatisfactory). If you are corrected, you repeat that item after 1 hour. If an item isn’t in the office, it is marked N/A.</p>
    <p>Use “Show” to find each item in the 3D rooms, and check off the ones you can find on your own. Your checks are saved on this device only.</p>`},
   {id:'best',sec:'Wrap-up',title:'Things best to remember',scene:OPS({zones:true,pins:[],cam:'top'}),controls:['opview','chair','zones','patient'],
@@ -4803,7 +4803,7 @@ function onCtl(ctl,val){
     case 'tissues':put('tissues',!V.tissues);break;
     case 'rec':put('rec',val);break;
     case 'age':put('age',val);break;
-    case 'reset':if(V.scene==='op'){camOp(mode==='lesson'&&curStep().scene.scene==='op'&&curStep().scene.view===V.opView?curStep().scene.cam:V.opView);break;}V.scene==='anat'?camAnat('anat'):(mode==='headneck'||(mode==='lesson'&&lesson.ch==='3')||V.kl.size)?camArch(curStep&&mode==='lesson'&&curStep().scene.cam||'kOblique'):camArch(V.arches==='both'?'front':V.arches);break;
+    case 'reset':if(V.scene==='op'){camOp(mode==='lesson'&&curStep().scene.scene==='op'&&curStep().scene.view===V.opView?curStep().scene.cam:V.opView);break;}V.scene==='anat'?camAnat('anat'):(mode==='headneck'||(mode==='lesson'&&curStep()._src==='3')||V.kl.size)?camArch(curStep&&mode==='lesson'&&curStep().scene.cam||'kOblique'):camArch(V.arches==='both'?'front':V.arches);break;
   }
   sync(); renderPanel();
 }
@@ -4939,11 +4939,13 @@ const prefs={
   op:{opView:'room',chair:'supine',zones:false,patient:true,opParts:false,part:null,svg:false,office:null,first:true},
   headneck:{view:'3d',kl:['mandible','maxilla','zyg','glands'],ghost:false,gumShow:false,map:'none',tongueUp:false,jaw:'closed',arches:'both',part:null,svgView:'profile',svgLayers:['landmarks'],svgPart:null,first:true}
 };
-const LESSONS={'3':LESSON3,'4':LESSON,'s2':LESSON_S2,'w3':LESSON_W3,'w4':LESSON_W4}, GLOSS={'3':GLOSSARY3,'4':GLOSSARY,'s2':GLOSSARY_S2,'w3':GLOSSARY_W3,'w4':GLOSSARY_W4};
-const CH_NAME={'3':'Chapter 3 · Head and neck anatomy','4':'Chapter 4 · Dental anatomy','s2':'Session 2 · Operatory, instruments and the dental office','w3':'Week 3 · Infection control and sterilization','w4':'Week 4 · The dental patient and dental radiography'};
-const QUIZ_OF={'3':'ch3','4':'ch4','s2':'chs2','w3':'chw3','w4':'chw4'};
-const CH_KEYS=['3','4','s2','w3','w4'];
-const lesson={ch:'w4',i:{'3':0,'4':0,'s2':0,'w3':0,'w4':0},answers:{},glossary:false};
+LESSON3.forEach(s=>s._src='3');LESSON.forEach(s=>s._src='4');
+const LESSONS={'w1':[...LESSON3,...LESSON],'s2':LESSON_S2,'w3':LESSON_W3,'w4':LESSON_W4}, GLOSS={'w1':[...GLOSSARY3,...GLOSSARY],'s2':GLOSSARY_S2,'w3':GLOSSARY_W3,'w4':GLOSSARY_W4};
+const CH_NAME={'w1':'Week 1 · Head and neck, and dental anatomy','s2':'Week 2 · Operatory, instruments and the dental office','w3':'Week 3 · Infection control and sterilization','w4':'Week 4 · The dental patient and dental radiography'};
+const QUIZ_OF={'w1':'chw1','s2':'chs2','w3':'chw3','w4':'chw4'};
+const CH_KEYS=['w1','s2','w3','w4'];
+const lesson={ch:'w4',i:{'w1':0,'s2':0,'w3':0,'w4':0},answers:{},glossary:false};
+{const oc=store.get('dta-ch');if((oc==='3'||oc==='4')&&store.get('dta-lesson-w1')==null){const v=+store.get('dta-lesson-'+oc)||0;store.set('dta-lesson-w1',String(oc==='4'?LESSON3.length+v:v));store.set('dta-ch','w1');}}
 {const c=store.get('dta-ch');if(!store.get('dta-w4-seen')){store.set('dta-w4-seen','1');store.set('dta-w3-seen','1');store.set('dta-s2-seen','1');}else if(CH_KEYS.includes(c))lesson.ch=c;CH_KEYS.forEach(c=>{const v=+store.get('dta-lesson-'+c);if(v>=0&&v<LESSONS[c].length)lesson.i[c]=v;});}
 const curStep=()=>LESSONS[lesson.ch][lesson.i[lesson.ch]];
 function resetView(){Object.assign(V,{opHl:[],opPins:[],zones:false,opParts:false,patient:true,roomState:'clean',apron:false,roots:false,labels:false,bite:0,jaw:'closed',midline:false,contacts:false,embr:false,color:'none',hl:[],pinKeys:[],brackets:false,focusSurf:null,revealSurf:null,kl:new Set(),ghost:false,gumShow:true,map:'none',tongueUp:false,kHl:[],svgHl:[],svgPins:[]});setIsolate(null);}
@@ -5214,7 +5216,7 @@ function genFindPart(){
   const k=pickR(keys);
   return {type:'findPart',key:'fp'+k+spec,kind:'Find the part',spec,target:k,prompt:`Click ${PART_PROMPT[k]}`,sub:`${A.DEFS[spec].name}. Click it on the cutaway tooth; zoom in for the thin layers.`,hint:PART_HINT[k],exp:[`<b>${PARTS[k].name}</b>: ${PARTS[k].def.charAt(0).toLowerCase()+PARTS[k].def.slice(1)}`,PARTS[k].more]};
 }
-function bankGen(topic){return ()=>{const i=Math.floor(Math.random()*BANK[topic].length),[q,a,d,h,e]=BANK[topic][i];return {type:'mc',key:'b'+topic+i,kind:topic==='parts'?'Tooth anatomy':topic==='surfaces'?'Surface terms':topic==='s2'?'Session 2':topic==='w3'?'Week 3':topic==='w4'?'Week 4':'Tooth facts',scene:topic==='parts'?'anat':(topic==='s2'||topic==='w3'||topic==='w4')?'op':'arch',prompt:q,options:shuffle([a,...d]),answer:a,hint:h,exp:[e]};};}
+function bankGen(topic){return ()=>{const i=Math.floor(Math.random()*BANK[topic].length),[q,a,d,h,e]=BANK[topic][i];return {type:'mc',key:'b'+topic+i,kind:topic==='parts'?'Tooth anatomy':topic==='surfaces'?'Surface terms':topic==='s2'?'Week 2':topic==='w3'?'Week 3':topic==='w4'?'Week 4':'Tooth facts',scene:topic==='parts'?'anat':(topic==='s2'||topic==='w3'||topic==='w4')?'op':'arch',prompt:q,options:shuffle([a,...d]),answer:a,hint:h,exp:[e]};};}
 function genFindKit(){
   const k=pickR(KIT_QUIZ), d=KP[k];
   const def=d.def.split('. ')[0].replace(/\.$/,'')+'.';
@@ -5256,6 +5258,7 @@ function startQuiz(which){
   quiz.set=which;
   if(which==='ch4'){quiz.qs=buildCh4();quiz.len=quiz.qs.length;}
   else if(which==='ch3'){quiz.qs=buildCh3();quiz.len=quiz.qs.length;}
+  else if(which==='chw1'){quiz.qs=[...buildCh3(),...buildCh4()];quiz.len=quiz.qs.length;}
   else if(which==='chs2'){quiz.qs=buildS2();quiz.len=quiz.qs.length;}
   else if(which==='chw3'){quiz.qs=buildW3();quiz.len=quiz.qs.length;}
   else if(which==='chw4'){quiz.qs=buildW4();quiz.len=quiz.qs.length;}
@@ -5353,9 +5356,8 @@ function quizPanel(){
       <p>Questions ask you to click the right tooth, surface or layer on the 3D model, or to pick from multiple choice. Every question has a hint and an explanation.</p>
       <div class="card feature" style="margin-top:14px"><h3>Week 4 review · The dental patient and radiography</h3><p class="aka small" style="margin:0">20 questions: the patient record, vital signs, film and receptors, paralleling and bitewings, x-ray errors, processing, digital, panoramic and radiation safety.</p><div class="actions" style="margin-top:6px"><button class="btn primary" data-act="chw4">Start the Week 4 review</button></div></div>
       <div class="card feature" style="margin-top:12px"><h3>Week 3 review · Infection control and sterilization</h3><p class="aka small" style="margin:0">20 questions: chain of infection, OSHA and PPE, sharps, hazard labels, barriers and disinfection, instrument categories and the sterilization center.</p><div class="actions" style="margin-top:6px"><button class="btn primary" data-act="chw3">Start the Week 3 review</button></div></div>
-      <div class="card feature" style="margin-top:12px"><h3>Session 2 review · Operatory, instruments and the office</h3><p class="aka small" style="margin:0">20 questions: clock zones, equipment and the mechanical room, instrument parts, handpieces, the dental team, ethics, law and HIPAA.</p><div class="actions" style="margin-top:6px"><button class="btn primary" data-act="chs2">Start the Session 2 review</button></div></div>
-      <div class="card feature" style="margin-top:12px"><h3>Chapter 3 review · Head and neck</h3><p class="aka small" style="margin:0">20 questions: bones and landmarks, TMJ, muscles, blood supply, nerve supply and injections, salivary glands, palate, gag reflex and mucosa.</p><div class="actions" style="margin-top:6px"><button class="btn primary" data-act="ch3">Start the Chapter 3 review</button></div></div>
-      <div class="card feature" style="margin-top:12px"><h3>Chapter 4 review · Dental anatomy</h3><p class="aka small" style="margin:0">20 questions covering the whole chapter: parts and tissues of the tooth, arches, sextants, surfaces, dentitions and numbering.</p><div class="actions" style="margin-top:6px"><button class="btn primary" data-act="ch4">Start the Chapter 4 review</button></div></div>
+      <div class="card feature" style="margin-top:12px"><h3>Week 2 review · Operatory, instruments and the office</h3><p class="aka small" style="margin:0">20 questions: clock zones, equipment and the mechanical room, instrument parts, handpieces, the dental team, ethics, law and HIPAA.</p><div class="actions" style="margin-top:6px"><button class="btn primary" data-act="chs2">Start the Week 2 review</button></div></div>
+      <div class="card feature" style="margin-top:12px"><h3>Week 1 review · Head and neck, and dental anatomy</h3><p class="aka small" style="margin:0">40 questions covering the whole week, or take either half on its own. Head and neck: bones, TMJ, muscles, blood and nerve supply, salivary glands and mucosa. Dental anatomy: parts and tissues of the tooth, arches, sextants, surfaces, dentitions and numbering.</p><div class="actions" style="margin-top:6px"><button class="btn primary" data-act="chw1">Start the full Week 1 review</button><button class="btn" data-act="ch3">Head and neck (20)</button><button class="btn" data-act="ch4">Dental anatomy (20)</button></div></div>
       <div class="card" style="margin-top:12px"><h3>Practice mix</h3><p class="aka small" style="margin:0">Random questions from the topics you pick.</p>
       <div class="topics">${TOPICS.map(([k,n,d])=>`<button data-topic="${k}" aria-pressed="${quiz.topics.has(k)}"><span class="box">${quiz.topics.has(k)?'✓':''}</span><span><span class="nm">${n}</span><span class="df">${d}</span></span></button>`).join('')}</div>
       <div class="seg" role="group" aria-label="Number of questions" style="display:inline-flex;width:max-content">${[5,10,20].map(n=>`<button data-len="${n}" aria-pressed="${quiz.len===n&&quiz.set==='practice'}">${n} questions</button>`).join('')}</div>
@@ -5364,7 +5366,7 @@ function quizPanel(){
   if(quiz.phase==='done'){
     const pct=Math.round(quiz.score/quiz.len*100);
     const verdict=pct===100?'A perfect round.':pct>=80?'Strong work. You know this material well.':pct>=60?'Solid. Review the misses below and go again.':'Keep at it. Revisit the lesson steps for the ones you missed, then try again.';
-    return `<section><p class="eyebrow">${quiz.set==='ch4'?'CHAPTER 4 REVIEW':quiz.set==='ch3'?'CHAPTER 3 REVIEW':quiz.set==='chs2'?'SESSION 2 REVIEW':quiz.set==='chw3'?'WEEK 3 REVIEW':quiz.set==='chw4'?'WEEK 4 REVIEW':'PRACTICE'} COMPLETE</p><div class="big">${quiz.score}/${quiz.len}</div><h2 style="font-size:1.1rem">${verdict}</h2>
+    return `<section><p class="eyebrow">${quiz.set==='ch4'?'WEEK 1 REVIEW · DENTAL ANATOMY':quiz.set==='ch3'?'WEEK 1 REVIEW · HEAD AND NECK':quiz.set==='chw1'?'WEEK 1 REVIEW':quiz.set==='chs2'?'WEEK 2 REVIEW':quiz.set==='chw3'?'WEEK 3 REVIEW':quiz.set==='chw4'?'WEEK 4 REVIEW':'PRACTICE'} COMPLETE</p><div class="big">${quiz.score}/${quiz.len}</div><h2 style="font-size:1.1rem">${verdict}</h2>
       <p class="aka">${pct}% correct · ${quiz.hints} hint${quiz.hints===1?'':'s'} used</p>
       <div class="actions"><button class="btn primary" data-act="again">Try again</button><button class="btn" data-act="setup">Back to quiz menu</button></div></section>
       ${quiz.missed.length?`<section><h3>Review these</h3><ul class="missed">${quiz.missed.map(m=>`<li>${esc(m.prompt)}<span>Answer: ${esc(m.answer)}</span></li>`).join('')}</ul></section>`:''}`;
@@ -5380,7 +5382,7 @@ function quizPanel(){
   const acts=q.done?`<button class="btn primary" data-act="next">${n===quiz.len?'See results':'Next question'}</button>`
     :`${q.hintShown?'':'<button class="btn" data-act="hint">Show hint</button>'}<button class="btn" data-act="reveal">Show answer</button>`;
   return `<section>
-    <div class="qhead"><p class="eyebrow" style="margin:0">${quiz.set==='ch4'?'CHAPTER 4 REVIEW · ':quiz.set==='ch3'?'CHAPTER 3 REVIEW · ':quiz.set==='chs2'?'SESSION 2 REVIEW · ':quiz.set==='chw3'?'WEEK 3 REVIEW · ':quiz.set==='chw4'?'WEEK 4 REVIEW · ':''}QUESTION ${n} OF ${quiz.len}</p><span class="qscore">${quiz.score} correct</span></div>
+    <div class="qhead"><p class="eyebrow" style="margin:0">${quiz.set==='ch4'?'WEEK 1 · DENTAL ANATOMY · ':quiz.set==='ch3'?'WEEK 1 · HEAD AND NECK · ':quiz.set==='chw1'?'WEEK 1 REVIEW · ':quiz.set==='chs2'?'WEEK 2 REVIEW · ':quiz.set==='chw3'?'WEEK 3 REVIEW · ':quiz.set==='chw4'?'WEEK 4 REVIEW · ':''}QUESTION ${n} OF ${quiz.len}</p><span class="qscore">${quiz.score} correct</span></div>
     <div class="bar qbar"><i style="width:${(quiz.i+(q.done?1:0))/quiz.len*100}%"></i></div>
     <span class="qkind">${esc(q.kind)}</span>
     <h2>${esc(q.prompt)}</h2>
@@ -5395,7 +5397,7 @@ function quizAction(b){
   if(b.dataset.topic){const k=b.dataset.topic;quiz.topics.has(k)?quiz.topics.delete(k):quiz.topics.add(k);}
   else if(b.dataset.len){quiz.len=+b.dataset.len;quiz.set='practice';}
   else if(b.dataset.opt!=null&&q&&!q.done){const o=q.options[+b.dataset.opt];q.picked=o;const ok=o===q.answer;q.feedback=ok?'Correct.':`Not quite. The answer is <b>${esc(q.answer)}</b>.`;finish(q,ok);}
-  else if(b.dataset.act==='ch4'||b.dataset.act==='ch3'||b.dataset.act==='chs2'||b.dataset.act==='chw3'||b.dataset.act==='chw4'){startQuiz(b.dataset.act);panel.scrollTop=0;return;}
+  else if(b.dataset.act==='ch4'||b.dataset.act==='ch3'||b.dataset.act==='chw1'||b.dataset.act==='chs2'||b.dataset.act==='chw3'||b.dataset.act==='chw4'){startQuiz(b.dataset.act);panel.scrollTop=0;return;}
   else if(b.dataset.act==='start'){if(!quiz.topics.size)return;if(quiz.len>20)quiz.len=10;startQuiz('practice');panel.scrollTop=0;return;}
   else if(b.dataset.act==='again'){startQuiz(quiz.set);panel.scrollTop=0;return;}
   else if(b.dataset.act==='setup'){quiz.phase='start';if(quiz.set!=='practice')quiz.len=10;}
@@ -5436,6 +5438,7 @@ panel.addEventListener('click',e=>{
   if(act==='glossary'){lesson.glossary=true;renderPanel();panel.scrollTop=0;return;}
   if(act==='closegloss'){lesson.glossary=false;renderPanel();return;}
   if(act==='ch4quiz'){enterMode('quiz');startQuiz('ch4');return;}
+  if(act==='chw1quiz'){enterMode('quiz');startQuiz('chw1');return;}
   if(b.dataset.goto){const i=LESSONS[lesson.ch].findIndex(s=>s.id===b.dataset.goto);if(i>=0)goStep(i);return;}
   if(b.dataset.lopt!=null){const st=curStep();lesson.answers[st.id]=st.check._opts[+b.dataset.lopt];renderPanel();return;}
   if(b.dataset.tid){const [s,id]=b.dataset.tid.split(':');const t=SETS[s].byId[s==='perm'?+id:id];V.sel=t;if(t.arch==='upper'&&V.arches==='lower'||t.arch==='lower'&&V.arches==='upper'){V.arches='both';prefs.chart.arches='both';camArch('front');}sync();renderPanel();return;}
@@ -5573,7 +5576,7 @@ function applyOpTab(){
 function zoneLegend(){return `<div class="surfchips" style="margin:4px 0 12px">${[['Operator 7–12','#2F6BE0'],['Transfer 4–7','#E0A11B'],['Assistant 2–4','#12A38A'],['Static 12–2','#8A96A0']].map(i=>`<span class="sc"><i style="background:${i[1]}"></i>${i[0]}</span>`).join('')}</div>`;}
 function roomLegend(){return V.roomState==='dirty'?`<div class="surfchips" style="margin:4px 0 12px"><span class="sc"><i style="background:#E0584A"></i>Touched with gloved hands: barrier or disinfect</span></div>`:V.roomState==='barriers'?`<div class="surfchips" style="margin:4px 0 12px"><span class="sc"><i style="background:#8FD0F7"></i>Surface barriers in place</span></div>`:'';}
 const compDone=new Set((()=>{try{return JSON.parse(store.get('dta-s2comp')||'[]');}catch(_){return [];}})());
-const COMPS={s2:{list:COMP_S2,pre:'',title:'Session 2 competency checklist'},w3:{list:COMP_W3,pre:'w3:',title:'Week 3 competency checklist'},w4:{list:COMP_W4,pre:'w4:',title:'Week 4 competency checklists'}};
+const COMPS={s2:{list:COMP_S2,pre:'',title:'Week 2 competency checklist'},w3:{list:COMP_W3,pre:'w3:',title:'Week 3 competency checklist'},w4:{list:COMP_W4,pre:'w4:',title:'Week 4 competency checklists'}};
 function compList(which){
   const C=COMPS[which]||COMPS.s2, N=C.list.reduce((a,s)=>a+s[1].length,0);
   let n=0; C.list.forEach((s,i)=>s[1].forEach((_,j)=>{if(compDone.has(C.pre+i+'-'+j))n++;}));
@@ -5602,7 +5605,7 @@ function opPanel(){
   const title={room:'The dental operatory',mech:'The mechanical room',inst:'Dental instruments',steri:'The sterilization center'}[V.opView];
   return `<section><p class="eyebrow">CLINIC · ${VN}</p>${d?`<h2>${esc(d.name)}</h2><p class="callout">${esc(d.def)}</p>${d.da?`<p class="da-box"><b>Chairside:</b> ${esc(d.da)}</p>`:''}`:`<h2>${title}</h2><p>${intro}</p>`}${V.zones&&V.opView==='room'?zoneLegend():''}${V.opView==='room'?roomLegend():''}</section>
   <section>${partsBtns}${groups.map(g=>`<h3 style="margin-top:12px">${esc(g)}</h3><div class="parts">${Object.keys(OPP).filter(x=>OPP[x].grp===g&&OPP[x].v===V.opView).map(x=>`<button data-opk="${x}" aria-pressed="${x===k}">${esc(OPP[x].name)}</button>`).join('')}</div>`).join('')}</section>
-  <section><details class="compwrap" data-c="s2"${p.compOpen_s2?' open':''}><summary>Session 2 competency checklist</summary>${compList('s2')}</details>
+  <section><details class="compwrap" data-c="s2"${p.compOpen_s2?' open':''}><summary>Week 2 competency checklist</summary>${compList('s2')}</details>
   <details class="compwrap" data-c="w3" style="margin-top:10px"${p.compOpen_w3?' open':''}><summary>Week 3 competency checklist</summary>${compList('w3')}</details>
   <details class="compwrap" data-c="w4" style="margin-top:10px"${p.compOpen_w4?' open':''}><summary>Week 4 competency checklists</summary>${compList('w4')}</details></section>`;
 }
@@ -5642,7 +5645,7 @@ buildOp(); opScene.add(OP.root); applyChair();
 camArch('front',true);
 requestBuild('lowerMolar|adult|healthy');
 const start=(location.hash||'').slice(1);
-enterMode(['lesson','op','chart','anatomy','headneck','surfaces','quiz'].includes(start)?start:'lesson');
+enterMode(['lesson','op','chart','anatomy','headneck','surfaces','quiz'].includes(start)?start:'chart');
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{allTeeth().forEach(drawLabel);});
 requestAnimationFrame(loop);
 
